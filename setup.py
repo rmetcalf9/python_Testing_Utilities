@@ -16,7 +16,7 @@ sp_tests_require = [
 
 all_require = sp_install_requires + sp_tests_require
 
-setup(name='object_store_abstraction',
+setup(name='python_Testing_Utilities',
       version=versioneer.get_version(),
       cmdclass=versioneer.get_cmdclass(),
       description='Testing utilities for python apps',
