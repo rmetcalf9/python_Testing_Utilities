@@ -8,7 +8,8 @@
     :license: MIT, see LICENSE for more details.
 """
 
-##TODO
+from .callService import callGetService, callPostService, callPutService, callDeleteService
+
 
 from ._version import get_versions
 __version__ = get_versions()['version']
