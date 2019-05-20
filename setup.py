@@ -3,12 +3,7 @@ import versioneer
 
 #Dependancy lists maintained here and in tox.ini
 sp_install_requires = [
-  'pytz==2018.4',
-  'sortedcontainers==1.5.9',
-  'pyjwt==1.7.1',
-  'sqlalchemy==1.3.1',
-  'PyMySQL==0.9.3',
-  'python-dateutil==2.7.2'
+  'requests=2.20.1'
 ]
 sp_tests_require = [
   'nose==1.3.7'
