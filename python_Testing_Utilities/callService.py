@@ -16,13 +16,13 @@ def _callService(testCaseInstance, url, headers, method, dataDICT, maxRetries, e
   if method=='get':
     requestsFn = requests.get
   if method=='post':
-    headers['content-type'] = 'application/json'
     if dataDICT is not None: 
+      headers['content-type'] = 'application/json'
       data=json.dumps(dataDICT)
     requestsFn = requests.post
   if method=='put':
-    headers['content-type'] = 'application/json'
     if dataDICT is not None: 
+      headers['content-type'] = 'application/json'
       data=json.dumps(dataDICT)
     requestsFn = requests.put
   if method=='delete':
