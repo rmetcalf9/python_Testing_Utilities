@@ -8,7 +8,7 @@
     :license: MIT, see LICENSE for more details.
 """
 
-from .callService import callService, callGetService, callPostService, callPutService, callDeleteService
+from .callService import callService, callGetService, callPostService, callPutService, callDeleteService, callServiceSendMultiPartFiles
 
 
 from ._version import get_versions

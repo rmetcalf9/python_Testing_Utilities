@@ -6,8 +6,7 @@ def _asserter(testCaseInstance, msg):
     raise Exception(msg)
   testCaseInstance.assertTrue(False, msg=msg)
 
-#sends input as JSON
-def callService(testCaseInstance, url, headers, method, dataDICT, expectedResponses):
+def _callService(testCaseInstance, url, headers, method, dataDICT, expectedResponses, files):
   result = None
   targetURL = url
   headers = {}
@@ -17,11 +16,13 @@ def callService(testCaseInstance, url, headers, method, dataDICT, expectedRespon
     requestsFn = requests.get
   if method=='post':
     headers['content-type'] = 'application/json'
-    data=json.dumps(dataDICT)
+    if dataDICT is not None: 
+      data=json.dumps(dataDICT)
     requestsFn = requests.post
   if method=='put':
     headers['content-type'] = 'application/json'
-    data=json.dumps(dataDICT)
+    if dataDICT is not None: 
+      data=json.dumps(dataDICT)
     requestsFn = requests.put
   if method=='delete':
     requestsFn = requests.delete
@@ -42,7 +43,8 @@ def callService(testCaseInstance, url, headers, method, dataDICT, expectedRespon
       result = requestsFn(
         targetURL,
         data=data,
-        headers=headers
+        headers=headers,
+        files=files
       )
     except Exception as err:
       unsucessful = True
@@ -55,12 +57,23 @@ def callService(testCaseInstance, url, headers, method, dataDICT, expectedRespon
     print("Sending " + method + " to ", targetURL)
     if dataDICT is not None:
       print(" data:", dataDICT)
+    if files is not None:
+      print(" sending multi part files not shown")
     print("Got response ",result.status_code)
     print("     ",result.text)
     
     _asserter(testCaseInstance,"Did not get expected response")
     return None, None
   return result.text, result.status_code
+
+#def input as multipart files
+def callServiceSendMultiPartFiles(testCaseInstance, url, headers, method, files, expectedResponses):
+  return _callService(testCaseInstance, url, headers, method, None, expectedResponses, files=files)
+
+
+#sends input as JSON
+def callService(testCaseInstance, url, headers, method, dataDICT, expectedResponses):
+  return _callService(testCaseInstance, url, headers, method, dataDICT, expectedResponses, files=None)
   
   
 def callGetService(testCaseInstance, url, headers,expectedResponses):
