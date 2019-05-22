@@ -7,7 +7,7 @@ def _asserter(testCaseInstance, msg):
     raise Exception(msg)
   testCaseInstance.assertTrue(False, msg=msg)
 
-def _callService(testCaseInstance, url, headers, method, dataDICT, expectedResponses, files):
+def _callService(testCaseInstance, url, headers, method, dataDICT, maxRetries, expectedResponses, files):
   result = None
   targetURL = url
   headers = {}
@@ -49,7 +49,7 @@ def _callService(testCaseInstance, url, headers, method, dataDICT, expectedRespo
       )
     except Exception as err:
       unsucessful = True
-      if numTries > 60:
+      if numTries > maxRetries:
         print("We have been trying too many times - giving up")
         raise err 
       
@@ -68,23 +68,23 @@ def _callService(testCaseInstance, url, headers, method, dataDICT, expectedRespo
   return result.text, result.status_code
 
 #def input as multipart files
-def callServiceSendMultiPartFiles(testCaseInstance, url, headers, method, files, expectedResponses):
-  return _callService(testCaseInstance, url, headers, method, None, expectedResponses, files=files)
+def callServiceSendMultiPartFiles(testCaseInstance, url, headers, method, maxRetries, expectedResponses, files):
+  return _callService(testCaseInstance, url, headers, method, None, maxRetries, expectedResponses, files=files)
 
 
 #sends input as JSON
-def callService(testCaseInstance, url, headers, method, dataDICT, expectedResponses):
-  return _callService(testCaseInstance, url, headers, method, dataDICT, expectedResponses, files=None)
+def callService(testCaseInstance, url, headers, method, dataDICT, maxRetries, expectedResponses):
+  return _callService(testCaseInstance, url, headers, method, dataDICT, maxRetries, expectedResponses, files=None)
   
   
-def callGetService(testCaseInstance, url, headers,expectedResponses):
-  return callService(testCaseInstance, url, headers, "get", None, expectedResponses)
+def callGetService(testCaseInstance, url, headers, maxRetries, expectedResponses):
+  return callService(testCaseInstance, url, headers, "get", None, maxRetries, expectedResponses)
 
-def callPostService(testCaseInstance, url, headers, POSTdict, expectedResponses):
-  return callService(testCaseInstance, url, headers, "post", POSTdict, expectedResponses)
+def callPostService(testCaseInstance, url, headers, POSTdict, maxRetries, expectedResponses):
+  return callService(testCaseInstance, url, headers, "post", POSTdict, maxRetries, expectedResponses)
 
-def callPutService(testCaseInstance, url, headers, PUTdict, expectedResponses):
-  return callService(testCaseInstance, url, headers, "put", PUTdict, expectedResponses)
+def callPutService(testCaseInstance, url, headers, PUTdict, maxRetries, expectedResponses):
+  return callService(testCaseInstance, url, headers, "put", PUTdict, maxRetries, expectedResponses)
 
-def callDeleteService(testCaseInstance, url, headers, expectedResponses):
-  return callService(testCaseInstance, url, headers, "delete", None, expectedResponses)
+def callDeleteService(testCaseInstance, url, headers, maxRetries, expectedResponses):
+  return callService(testCaseInstance, url, headers, "delete", None, maxRetries, expectedResponses)

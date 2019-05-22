@@ -15,7 +15,7 @@ class mock_TestCase():
 class test_callService(unittest.TestCase): 
   def test_getWorks(self):
     headers = {}
-    resultText, resultCode = undertest.callGetService(self, "http://www.google.com", headers, [200])
+    resultText, resultCode = undertest.callGetService(self, "http://www.google.com", headers, 5, [200])
     
     self.assertEqual(resultCode,200)
     expectedStart = "<!doctype html>"
@@ -26,7 +26,7 @@ class test_callService(unittest.TestCase):
   def test_getUnexpectedCode(self):
     mock = mock_TestCase()
     headers = {}
-    resultText, resultCode = undertest.callGetService(mock, "http://www.google.com", headers, [201])
+    resultText, resultCode = undertest.callGetService(mock, "http://www.google.com", headers, 5, [201])
     
     self.assertEqual(resultCode,None)
     self.assertEqual(mock.args, (False, ))
@@ -34,10 +34,10 @@ class test_callService(unittest.TestCase):
 
   def test_DeleteWorks(self):
     headers = {}
-    resultText, resultCode = undertest.callDeleteService(self, "http://www.google.com", headers, [405])
+    resultText, resultCode = undertest.callDeleteService(self, "http://www.google.com", headers, 5, [405])
 
   def test_PostWorks(self):
     headers = {}
     data = {"TestTag": "TestValue"}
-    resultText, resultCode = undertest.callPostService(self, "http://www.google.com", headers, data, [405])
+    resultText, resultCode = undertest.callPostService(self, "http://www.google.com", headers, data, 5, [405])
     
