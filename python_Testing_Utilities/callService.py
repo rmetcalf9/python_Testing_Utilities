@@ -16,22 +16,22 @@ def _callService(testCaseInstance, url, headers, method, dataDICT, maxRetries, e
   if method=='get':
     requestsFn = requests.get
   if method=='post':
-    if dataDICT is not None: 
+    if dataDICT is not None:
       headers['content-type'] = 'application/json'
       data=json.dumps(dataDICT)
     requestsFn = requests.post
   if method=='put':
-    if dataDICT is not None: 
+    if dataDICT is not None:
       headers['content-type'] = 'application/json'
       data=json.dumps(dataDICT)
     requestsFn = requests.put
   if method=='delete':
     requestsFn = requests.delete
-    
+
   if requestsFn is None:
     _asserter(testCaseInstance,"Invalid method")
     return None, None
-    
+
   numTries = 0
   unsucessful = True
   while unsucessful:
@@ -51,8 +51,8 @@ def _callService(testCaseInstance, url, headers, method, dataDICT, maxRetries, e
       unsucessful = True
       if numTries > maxRetries:
         print("We have been trying too many times - giving up")
-        raise err 
-      
+        raise err
+
 
   if result.status_code not in expectedResponses:
     print("Sending " + method + " to ", targetURL)
@@ -62,7 +62,7 @@ def _callService(testCaseInstance, url, headers, method, dataDICT, maxRetries, e
       print(" sending multi part files not shown")
     print("Got response ",result.status_code)
     print("     ",result.text)
-    
+
     _asserter(testCaseInstance,"Did not get expected response")
     return None, None
   return result.text, result.status_code
@@ -71,12 +71,14 @@ def _callService(testCaseInstance, url, headers, method, dataDICT, maxRetries, e
 def callServiceSendMultiPartFiles(testCaseInstance, url, headers, method, maxRetries, expectedResponses, files):
   return _callService(testCaseInstance, url, headers, method, None, maxRetries, expectedResponses, files=files)
 
+def callServiceSendMultiPartFilesAndData(testCaseInstance, url, headers, method, maxRetries, expectedResponses, files, data):
+  return _callService(testCaseInstance, url, headers, method, data, maxRetries, expectedResponses, files=files)
 
 #sends input as JSON
 def callService(testCaseInstance, url, headers, method, dataDICT, maxRetries, expectedResponses):
   return _callService(testCaseInstance, url, headers, method, dataDICT, maxRetries, expectedResponses, files=None)
-  
-  
+
+
 def callGetService(testCaseInstance, url, headers, maxRetries, expectedResponses):
   return callService(testCaseInstance, url, headers, "get", None, maxRetries, expectedResponses)
 
