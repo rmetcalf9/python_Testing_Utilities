@@ -9,7 +9,7 @@
 """
 
 from .callService import callService, callGetService, callPostService, callPutService, callDeleteService, callServiceSendMultiPartFiles
-
+from .pythonObjCompare import objectsEqual
 
 from ._version import get_versions
 __version__ = get_versions()['version']
