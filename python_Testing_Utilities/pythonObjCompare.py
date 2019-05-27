@@ -1,6 +1,12 @@
 
+maxRecursionDepth = 100
 
-def objectsEqual(first, second):
+class DataObjectToComplexToCompare(Exception):
+    pass
+
+def _objectsEqual(first, second, recursionLevel):
+    if recursionLevel > maxRecursionDepth:
+        raise DataObjectToComplexToCompare("Data object two complex to compare")
     if type(first) != type(second):
         return False
     if isinstance(first, str):
@@ -8,12 +14,15 @@ def objectsEqual(first, second):
     if isinstance(first, int):
         return first == second
     if isinstance(first, list):
-        return listEqual(first, second)
+        return _listEqual(first, second, recursionLevel+1)
 
-def _numTimesItemIsInList(item, list):
+def objectsEqual(first, second):
+    return _objectsEqual(first, second, 0)
+
+def _numTimesItemIsInList(item, list, recursionLevel):
     ret = 0
     for x in list:
-        if objectsEqual(x,item):
+        if _objectsEqual(x,item, recursionLevel):
             ret += 1
     return ret
 
@@ -22,7 +31,7 @@ def _makeHashable(item):
         return "LIS:" + str(item) #not great but good enough
     return item
 
-def listEqual(first, second):
+def _listEqual(first, second, recursionLevel):
     if len(first) != len(second):
         return False
     data = {}
@@ -40,8 +49,8 @@ def listEqual(first, second):
         }
 
     for x in data:
-        data[x]["times_in_first"] = _numTimesItemIsInList(data[x]["item"],first)
-        data[x]["times_in_second"] = _numTimesItemIsInList(data[x]["item"],second)
+        data[x]["times_in_first"] = _numTimesItemIsInList(data[x]["item"],first, recursionLevel)
+        data[x]["times_in_second"] = _numTimesItemIsInList(data[x]["item"],second, recursionLevel)
         if data[x]["times_in_first"] != data[x]["times_in_second"]:
             return False
 

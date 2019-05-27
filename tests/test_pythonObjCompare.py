@@ -73,3 +73,22 @@ class test_main(unittest.TestCase):
     self.af(NestedListRep,NestedListRep2,False,msg="Nested list with repeating elements failing diff")
     self.af(NestedListRep,NestedListRep,True,msg="Nested list with repeating elements failing same")
     self.af(NestedListRep2,NestedListRep2,True,msg="List with repeating elements failing same")
+
+  def test_recursibeList(self):
+    listA = []
+    listB = []
+    listA.append(listB)
+    listB.append(listA)
+    gotExp = False
+    try:
+        self.af(listA,listB,False,msg="Recursive list not equal")
+    except undertest.DataObjectToComplexToCompare:
+        gotExp = True
+    self.assertTrue(gotExp, msg="Exception not raised")
+
+  def test_badString(self):
+      listA = []
+      listB = [listA]
+      listC = ["LIS:" + str(listA)]
+
+      self.af(listB,listC,False,msg="String matchin list fails")

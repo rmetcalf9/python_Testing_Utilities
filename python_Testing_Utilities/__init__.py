@@ -11,6 +11,9 @@
 from .callService import callService, callGetService, callPostService, callPutService, callDeleteService, callServiceSendMultiPartFiles, callServiceSendMultiPartFilesAndData
 from .pythonObjCompare import objectsEqual
 
+#Exceptions
+from .pythonObjCompare import DataObjectToComplexToCompare
+
 from ._version import get_versions
 __version__ = get_versions()['version']
 del get_versions
