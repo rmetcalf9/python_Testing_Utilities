@@ -10,6 +10,7 @@
 
 from .callService import callService, callGetService, callPostService, callPutService, callDeleteService, callServiceSendMultiPartFiles, callServiceSendMultiPartFilesAndData
 from .pythonObjCompare import objectsEqual
+from .assertMultiLineStringsEqual import areMultiLinesStringsEqual, assertMultiLineStringsEqual
 
 from ._version import get_versions
 __version__ = get_versions()['version']
