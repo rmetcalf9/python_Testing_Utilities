@@ -10,6 +10,7 @@
 
 from .callService import callService, callGetService, callPostService, callPutService, callDeleteService, callServiceSendMultiPartFiles, callServiceSendMultiPartFilesAndData
 from .pythonObjCompare import objectsEqual
+from .assertMultiLineStringsEqual import areMultiLinesStringsEqual, assertMultiLineStringsEqual
 
 #Exceptions
 from .pythonObjCompare import DataObjectToComplexToCompare
