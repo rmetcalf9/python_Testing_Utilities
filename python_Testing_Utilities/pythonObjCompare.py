@@ -1,8 +1,40 @@
+import copy
+import json
 
 maxRecursionDepth = 100
 
 class DataObjectToComplexToCompare(Exception):
     pass
+
+def assertObjectsEqual(unittestTestCaseClass, first, second, msg, ignoredRootKeys=[]):
+  cleanedfirst = copy.deepcopy(first)
+  cleanedsecond = copy.deepcopy(second)
+
+  for key_to_ignore in ignoredRootKeys:
+    keyPresentInEither = False
+    if key_to_ignore in cleanedfirst:
+      keyPresentInEither = True
+    if key_to_ignore in cleanedsecond:
+      keyPresentInEither = True
+    if keyPresentInEither:
+      cleanedfirst[key_to_ignore] = 'ignored'
+      cleanedsecond[key_to_ignore] = 'ignored'
+
+  if (objectsEqual(cleanedfirst, cleanedsecond)):
+    return
+
+  ignoredKeysMsg = ""
+  if ignoredRootKeys is not None:
+    if len(ignoredRootKeys) > 0:
+      ignoredKeysMsg = " (Ignored keys " + str(ignoredRootKeys) + " ignored)"
+  print("Object mismatch" + ignoredKeysMsg)
+  a = json.dumps(cleanedfirst, sort_keys=True)
+  b = json.dumps(cleanedsecond, sort_keys=True)
+  print(a)
+  print("--")
+  print(b)
+
+  unittestTestCaseClass.assertTrue(False, msg)
 
 def _objectsEqual(first, second, recursionLevel):
     if recursionLevel > maxRecursionDepth:

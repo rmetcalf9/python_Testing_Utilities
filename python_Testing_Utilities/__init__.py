@@ -9,7 +9,7 @@
 """
 
 from .callService import callService, callGetService, callPostService, callPutService, callDeleteService, callServiceSendMultiPartFiles, callServiceSendMultiPartFilesAndData
-from .pythonObjCompare import objectsEqual
+from .pythonObjCompare import objectsEqual, assertObjectsEqual
 from .assertMultiLineStringsEqual import areMultiLinesStringsEqual, assertMultiLineStringsEqual
 
 #Exceptions

@@ -148,3 +148,16 @@ class test_main(unittest.TestCase):
 #test dict and list combinations
 
 #test list and dict combinations
+
+  def test_assertObjectsEqual(self):
+    # basic check that we can call and keys are ignored
+    obj1 = { "A": "a" }
+    obj2 = { "A": "a", "id": "dddd"}
+
+    undertest.assertObjectsEqual(
+      unittestTestCaseClass=self,
+      first=obj1,
+      second=obj2,
+      msg="Failed",
+      ignoredRootKeys=["id"]
+    )
