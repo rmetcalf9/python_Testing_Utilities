@@ -74,7 +74,7 @@ class test_main(unittest.TestCase):
     self.af(NestedListRep,NestedListRep,True,msg="Nested list with repeating elements failing same")
     self.af(NestedListRep2,NestedListRep2,True,msg="List with repeating elements failing same")
 
-  def test_recursibeList(self):
+  def test_recursiveList(self):
     listA = []
     listB = []
     listA.append(listB)
@@ -92,3 +92,59 @@ class test_main(unittest.TestCase):
       listC = ["LIS:" + str(listA)]
 
       self.af(listB,listC,False,msg="String matchin list fails")
+
+
+  def test_dict(self):
+    listA = {}
+    listB = {"a":"a"}
+    listC = {"a":"a", "B":"b"}
+    listD = {"a":"a", "B":123}
+    listE = {"a":"a", "B":123, "C": {} }
+    listF = {"a":"a", "B":123, "C": {"a": "a"} }
+    listG = {"a":"a", "B":123, "C": {"a": "a", "b": "b"} }
+
+    listAA = {}
+    listBB = {"a":"a"}
+    listC2 = {"B":"b", "a":"a"}
+    listC3 = {"a":"a", "B":"bb"}
+
+    self.af(listA,listA,True,msg="Equal")
+    self.af(listB,listB,True,msg="Equal")
+    self.af(listC,listC,True,msg="Equal")
+    self.af(listD,listD,True,msg="Equal")
+    self.af(listE,listE,True,msg="Equal")
+    self.af(listF,listF,True,msg="Equal")
+    self.af(listG,listG,True,msg="Equal")
+
+    self.af(listA,listAA,True,msg="Equal")
+    self.af(listB,listBB,True,msg="Equal")
+    self.af(listC,listC2,True,msg="Dicts with different order should be equal")
+    self.af(listC,listC3,False,msg="Dict with same keys but different contents should be different")
+
+    self.af(listA,listB,False,msg="Equal")
+    self.af(listA,listC,False,msg="Equal")
+    self.af(listA,listD,False,msg="Equal")
+    self.af(listA,listE,False,msg="Equal")
+    self.af(listA,listF,False,msg="Equal")
+    self.af(listA,listG,False,msg="Equal")
+
+    self.af(listB,listC,False,msg="Equal")
+    self.af(listB,listD,False,msg="Equal")
+    self.af(listB,listE,False,msg="Equal")
+    self.af(listB,listF,False,msg="Equal")
+    self.af(listB,listG,False,msg="Equal")
+
+    listRep = ["a", "a", "a"]
+    listRep2 = ["a", "b", "a"]
+    self.af(listRep,listRep2,False,msg="List with repeating elements failing diff")
+    self.af(listRep,listRep,True,msg="List with repeating elements failing same")
+    self.af(listRep2,listRep2,True,msg="List with repeating elements failing same")
+
+    NestedListRep = [["a"], ["a"], ["a"]]
+    NestedListRep2 = [["a"], ["b"], ["a"]]
+    self.af(NestedListRep,NestedListRep2,False,msg="Nested list with repeating elements failing diff")
+    self.af(NestedListRep,NestedListRep,True,msg="Nested list with repeating elements failing same")
+    self.af(NestedListRep2,NestedListRep2,True,msg="List with repeating elements failing same")
+#test dict and list combinations
+
+#test list and dict combinations

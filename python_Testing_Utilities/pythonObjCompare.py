@@ -15,6 +15,8 @@ def _objectsEqual(first, second, recursionLevel):
         return first == second
     if isinstance(first, list):
         return _listEqual(first, second, recursionLevel+1)
+    if isinstance(first, dict):
+        return _dictEqual(first, second, recursionLevel+1)
 
 def objectsEqual(first, second):
     return _objectsEqual(first, second, 0)
@@ -30,6 +32,16 @@ def _makeHashable(item):
     if isinstance(item, list):
         return "LIS:" + str(item) #not great but good enough
     return item
+
+def _dictEqual(first, second, recursionLevel):
+  if not _listEqual(list(first.keys()), list(second.keys()), recursionLevel):
+    return False
+  # we have the same keys - so just have to check values
+  for key in first.keys():
+    if not _objectsEqual(first[key], second[key], recursionLevel):
+      return False
+
+  return True
 
 def _listEqual(first, second, recursionLevel):
     if len(first) != len(second):
