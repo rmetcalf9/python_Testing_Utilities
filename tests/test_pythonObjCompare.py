@@ -161,3 +161,29 @@ class test_main(unittest.TestCase):
       msg="Failed",
       ignoredRootKeys=["id"]
     )
+
+  def test_assertObjectsEqualBytes(self):
+    # check bytes objects
+    obj1 = b"abc"
+    obj2 = b"abc"
+    obj3 = b"def"
+
+    undertest.assertObjectsEqual(
+      unittestTestCaseClass=self,
+      first=obj1,
+      second=obj2,
+      msg="Failed",
+      ignoredRootKeys=[]
+    )
+
+    try:
+      undertest.assertObjectsEqual(
+        unittestTestCaseClass=self,
+        first=obj1,
+        second=obj3,
+        msg="Failed",
+        ignoredRootKeys=[]
+      )
+    except AssertionError:
+      gotExp = True
+    self.assertTrue(gotExp, msg="AssertionError not raised")

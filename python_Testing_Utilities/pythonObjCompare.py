@@ -28,8 +28,8 @@ def assertObjectsEqual(unittestTestCaseClass, first, second, msg, ignoredRootKey
     if len(ignoredRootKeys) > 0:
       ignoredKeysMsg = " (Ignored keys " + str(ignoredRootKeys) + " ignored)"
   print("Object mismatch" + ignoredKeysMsg)
-  a = json.dumps(cleanedfirst, sort_keys=True)
-  b = json.dumps(cleanedsecond, sort_keys=True)
+  a = json.dumps(str(cleanedfirst), sort_keys=True)
+  b = json.dumps(str(cleanedsecond), sort_keys=True)
   print(a)
   print("--")
   print(b)
@@ -42,6 +42,8 @@ def _objectsEqual(first, second, recursionLevel):
     if type(first) != type(second):
         return False
     if isinstance(first, str):
+        return first == second
+    if isinstance(first, bytes):
         return first == second
     if isinstance(first, int):
         return first == second
