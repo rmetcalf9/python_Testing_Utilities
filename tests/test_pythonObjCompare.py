@@ -14,6 +14,9 @@ class test_main(unittest.TestCase):
   def test_differentTypes(self):
     self.assertFalse(undertest.objectsEqual("A",123),msg="Different types should not be Equal")
 
+  def test_none(self):
+    self.assertTrue(undertest.objectsEqual(None,None),msg="Different None types")
+
   def test_strings(self):
     self.assertTrue(undertest.objectsEqual("A","A"),msg="Strings Equal")
     self.assertFalse(undertest.objectsEqual("A","B"),msg="Strings Equal")

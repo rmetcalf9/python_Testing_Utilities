@@ -41,6 +41,8 @@ def _objectsEqual(first, second, recursionLevel):
         raise DataObjectToComplexToCompare("Data object two complex to compare")
     if type(first) != type(second):
         return False
+    if first is None:
+        return second is None
     if isinstance(first, str):
         return first == second
     if isinstance(first, bytes):
