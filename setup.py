@@ -6,7 +6,7 @@ sp_install_requires = [
   'requests==2.20.1'
 ]
 sp_tests_require = [
-  'nose==1.3.7'
+  'pytest==7.1.2'
 ]
 
 all_require = sp_install_requires + sp_tests_require
